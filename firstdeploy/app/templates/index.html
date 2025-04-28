@@ -6,9 +6,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Document</title>
+    <title>Login Registration</title>
 </head>
 <body>
-    <p>Hello world?</p>
+    <div class="indexpage">
+        <form action="/register/" method='POST'>
+            {% csrf_token %}
+            <label for="first_name">First name <input type="text" name="first_name" id="first_name"></label>
+            <label for="last_name">Last name <input type="text" name="last_name" id="last_name"></label>
+            <label for="email">Email <input type="email" name="email" id="email"></label>
+            <label for="password">Password <input type="password" name="password" id="password"></label>
+            <label for="confirmpassword">Confirm Password <input type="password" name="confirmpassword" id="confirmpassword"></label>
+            <input type="submit" value="Register">
+            <div class="errors">
+                {% for error in errors %}
+                <p>{{error}}</p>
+                {% endfor %}
+            </div>
+        </form>
+        <form action="/login/" method='POST'>
+            {% csrf_token %}
+            <label for="email">Email <input type="email" name="email" id="email"></label>
+            <label for="password">Password <input type="password" name="password" id="password"></label>
+            <input type="submit" value="login">
+        </form>
+    </div>
 </body>
 </html>

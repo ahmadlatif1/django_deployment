@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Details</title>
+</head>
+<body>
+    <div class="projectdetails vertpage">
+        <div class="topbar">
+            <h1>{{project.name}}</h1>
+            <a href="/logout/">Logout</a>
+        </div>
+        <div>
+            <div class="buttonrow">
+                <a class= 'btn' href="/dashboard/">Dashboard</a>
+            </div>
+        </div>
+        <div class="detailbody">
+            <p>project name:{{project.name}}</p>
+            <p>project owner:{{project.owner.first_name}} {{project.owner.last_name}}</p>
+            <p>{{project.description}}</p>
+        </div>
+
+
+        <div class="detailbottom">
+            <div class="teamlist">
+                <h2>{{project.name}} Team</h2>
+                <div class="memberlistitem">{{project.owner.first_name}} {{project.owner.last_name}}</div>
+                {% for member in members %}
+                <div class="memberlistitem">
+                    <span>{{member.first_name}} {{member.last_name}}</span>
+                    {% if user.id == project.owner.id %}
+                    <a class="removex" href="/leave/">X</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="buttonrow">
+                {% if project.owner.id == user.id %}
+                <a class= 'btn' href="/editproject/{{project.id}}">Edit Project</a>
+                <a class= 'btn' href="/deleteproject/{{project.id}}">Delete Project</a>
+                {% endif %}
+                
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+</html>

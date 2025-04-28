@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="dashboard vertpage">
+        <div class="topbar">
+            <h1>Welcome {{user.first_name}} to Developers Dashboard</h1>
+            <a href="/logout/">Logout</a>
+        </div>
+        <a href="/createproject/" class="createref">
+            <span>Create Project +</span>
+        </a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Project name</th>
+                <th>Project owner</th>
+                <th>Action</th>
+            </tr>
+            {% for project in projects %}
+            <tr>
+                <td>project.id</td>
+                <td><a href="/project/{{project.id}}/details">{{project.name}}</a></td>
+                <td>{{project.owner.first_name}} {{project.owner.last_name}}</td>
+                <td class="tableaction">
+                    {% if project.owner.id == user.id %}
+                    <form action="/deleteproject/{{project.id}}/" method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="userid" value="{{user.id}}">
+                        <input class="actionsubmit" type="submit" value="Delete">
+                    </form>
+                    {% elif user.id in project.members %}
+                    <form action="/leave/{{project.id}}/{{user.id}}" method='POST'>
+                        {% csrf_token %}
+                        <input class="actionsubmit" type="submit" value="Separate">
+                    </form>
+                    {% else %}
+                    <form action="/join/{{project.id}}/{{user.id}}" method='POST'>
+                        {% csrf_token %}
+                        <input class="actionsubmit" type="submit" value="Join">
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

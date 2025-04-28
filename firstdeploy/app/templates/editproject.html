@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Edit Project</title>
+</head>
+<body>
+
+    <div class="editprojectpage vertpage">
+        <div class="topbar">
+            <h1>Hello {{user.first_name}} {{user.last_name}}</h1>
+            <a href="/logout/">Logout</a>
+        </div>
+        <form action="/createproject/" method='POST'>
+            {% csrf_token %}
+            <label for="name">Project Name <input type="text" name="name" id="name" value="{{project.name}}"></label>
+            <label for="description">description <textarea name="description" id="description" >{{project.description}}</textarea></label>
+            <label for="startdate">Start Date <input type="date" name="start_date" id="start_date" value="{{project.start_date|date:'Y-m-d'}}"></label>
+            <label for="enddate">End Date <input type="date" name="end_date" id="end_date" value="{{project.end_date|date:'Y-m-d'}}"></label>
+            <div class="buttonrow">
+                <a class="btn" href="/deleteproject/{{project.id}}">delete</a>
+                <input class="btn" type="submit" value="Save">
+                <a class="btn" href="/dashboard/">back</a>
+            </div>
+            <div class="errors">
+                {% for error in errors %}
+                <p>{{error}}</p>
+                {% endfor %}
+            </div>
+            
+        </form>
+    </div>
+    
+</body>
+</html>
