@@ -67,7 +67,8 @@ def details(request,id):
     userid=request.session['userid']
     context={
         'user':User.objects.get(id=userid),
-        'project':Project.objects.get(id=id)
+        'project':Project.objects.get(id=id),
+        'members':Project.objects.get(id=id).members.all()
     }
     return render(request,"projectdetails.html",context)
         
@@ -82,6 +83,7 @@ def updateproject(request,id):
     project.description=request.POST['description']
     project.start_date=request.POST['start_date']
     project.end_date=request.POST['end_date']
+    project.save()
 
     return redirect(f'/project/{project.id}/details')
 
@@ -102,6 +104,7 @@ def deleteproject(request,projectid):
 def join(request,projectid,userid):
     project=Project.objects.get(id=projectid)
     project.members.add(User.objects.get(id=userid))
+    print(project.members.all())
     project.save()
     return redirect('/dashboard')
 
@@ -112,5 +115,5 @@ def leave(request,projectid,userid):
     return redirect('/dashboard')
 
 def logout(request):
-    request.session.flush
+    request.session.flush()
     return redirect('/')

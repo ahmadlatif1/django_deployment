@@ -11,7 +11,8 @@ urlpatterns = [
     path('login/',views.login), # function call
     path('addproject/',views.addproject), # to add the project
     path('deleteproject/<int:projectid>/',views.deleteproject),
-    path('join/<int:projectid>/<int:userid>',views.join),
+    path('join/<int:projectid>/<int:userid>/',views.join),
     path('leave/<int:projectid>/<int:userid>/',views.leave),
-    path('logout/',views.logout) 
+    path('logout/',views.logout) ,
+    path('updateproject/<int:id>/',views.updateproject),
 ]

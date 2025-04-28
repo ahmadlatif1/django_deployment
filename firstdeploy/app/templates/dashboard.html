@@ -26,7 +26,7 @@
             </tr>
             {% for project in projects %}
             <tr>
-                <td>project.id</td>
+                <td>{{project.id}}</td>
                 <td><a href="/project/{{project.id}}/details">{{project.name}}</a></td>
                 <td>{{project.owner.first_name}} {{project.owner.last_name}}</td>
                 <td class="tableaction">
@@ -37,12 +37,12 @@
                         <input class="actionsubmit" type="submit" value="Delete">
                     </form>
                     {% elif user.id in project.members %}
-                    <form action="/leave/{{project.id}}/{{user.id}}" method='POST'>
+                    <form action="/leave/{{project.id}}/{{user.id}}/" method='POST'>
                         {% csrf_token %}
                         <input class="actionsubmit" type="submit" value="Separate">
                     </form>
                     {% else %}
-                    <form action="/join/{{project.id}}/{{user.id}}" method='POST'>
+                    <form action="/join/{{project.id}}/{{user.id}}/" method='POST'>
                         {% csrf_token %}
                         <input class="actionsubmit" type="submit" value="Join">
                     </form>

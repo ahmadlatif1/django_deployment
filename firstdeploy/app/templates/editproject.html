@@ -15,10 +15,10 @@
             <h1>Hello {{user.first_name}} {{user.last_name}}</h1>
             <a href="/logout/">Logout</a>
         </div>
-        <form action="/createproject/" method='POST'>
+        <form action="/updateproject/{{project.id}}/" method='POST'>
             {% csrf_token %}
             <label for="name">Project Name <input type="text" name="name" id="name" value="{{project.name}}"></label>
-            <label for="description">description <textarea name="description" id="description" >{{project.description}}</textarea></label>
+            <label for="description">description <textarea name="description" id="description">{{project.description}}</textarea></label>
             <label for="startdate">Start Date <input type="date" name="start_date" id="start_date" value="{{project.start_date|date:'Y-m-d'}}"></label>
             <label for="enddate">End Date <input type="date" name="end_date" id="end_date" value="{{project.end_date|date:'Y-m-d'}}"></label>
             <div class="buttonrow">
